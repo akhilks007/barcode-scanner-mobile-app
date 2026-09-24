@@ -63,6 +63,10 @@ and types them into whatever is active on the Mac, then presses Return to move t
 Each one is typed into the cell and the cursor moves down. Change "After each scan press" to
 **Tab** in the menu-bar window to fill across a row instead.
 
-To keep the Mac app without Xcode: in Xcode's file list open **Products**, right-click
-**ScanCopyMac.app** ▸ Show in Finder, drag it to **Applications**, and turn on **Open at login**
-in its menu. If typing stops after you rebuild it, remove and re-add ScanCopyMac in the Accessibility list.
+**Install permanently:** double-click **Install ScanCopy Mac.command** in this folder. It builds the app,
+copies it to /Applications, starts it, and sets it to open automatically at login. Run it again after any code
+change. After the first install, re-enable ScanCopyMac in the Accessibility list if typing doesn't work.
+
+**Auto-reconnect:** once the code is entered on the iPhone, it's remembered on both devices. Whenever ScanCopy
+is open on the iPhone, it finds the Mac and connects within a few seconds. This also works after the Mac restarts,
+wakes from sleep, or the Wi-Fi changes. (iOS doesn't allow the link while the iPhone app is closed.)

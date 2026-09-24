@@ -1,6 +1,7 @@
 import AppKit
 import Foundation
 import MultipeerConnectivity
+import ServiceManagement
 
 /// Data sent by the iPhone for each scan (must match the iPhone app).
 struct ScanPayload: Codable {
@@ -48,10 +49,12 @@ final class ScanReceiver: NSObject, ObservableObject {
         didSet { UserDefaults.standard.set(afterScan.rawValue, forKey: "afterScan") }
     }
 
-    private let myPeer = MCPeerID(displayName: Host.current().localizedName ?? "Mac")
+    private let myPeer = PeerIdentity.load(key: "peerID", displayName: Host.current().localizedName ?? "Mac")
     private var session: MCSession?
     private var advertiser: MCNearbyServiceAdvertiser?
     private var accessibilityTimer: Timer?
+    private var watchdog: Timer?
+    private var wakeObserver: NSObjectProtocol?
 
     override init() {
         let defaults = UserDefaults.standard
@@ -61,7 +64,22 @@ final class ScanReceiver: NSObject, ObservableObject {
         afterScan = AfterScanKey(rawValue: defaults.string(forKey: "afterScan") ?? "") ?? .returnKey
         super.init()
         defaults.set(pairingCode, forKey: "pairingCode")
+        enableOpenAtLoginOnFirstRun()
         startAdvertising()
+
+        // After the Mac wakes from sleep, start listening again so the iPhone reconnects by itself.
+        wakeObserver = NSWorkspace.shared.notificationCenter.addObserver(
+            forName: NSWorkspace.didWakeNotification, object: nil, queue: .main
+        ) { [weak self] _ in
+            MainActor.assumeIsolated { self?.startAdvertising() }
+        }
+        // If nobody is connected for a while, refresh the listener (recovers from network changes).
+        watchdog = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
+            MainActor.assumeIsolated {
+                guard let self, self.connectedPhones.isEmpty else { return }
+                self.startAdvertising()
+            }
+        }
 
         // Keep the Accessibility status fresh (the user grants it in System Settings).
         accessibilityTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self] _ in
@@ -141,6 +159,15 @@ final class ScanReceiver: NSObject, ObservableObject {
 
     // MARK: - Helpers
 
+    /// The first time the app runs from /Applications, add it to Login Items so it's always running.
+    private func enableOpenAtLoginOnFirstRun() {
+        let key = "didAutoEnableLoginItem"
+        guard !UserDefaults.standard.bool(forKey: key),
+              Bundle.main.bundlePath.hasPrefix("/Applications") else { return }
+        UserDefaults.standard.set(true, forKey: key)
+        try? SMAppService.mainApp.register()
+    }
+
     /// Replaces line breaks / control characters with spaces and limits the length.
     static func sanitize(_ value: String) -> String {
         let cleaned = value.unicodeScalars
@@ -196,4 +223,21 @@ extension ScanReceiver: MCSessionDelegate {
                              fromPeer peerID: MCPeerID, with progress: Progress) {}
     nonisolated func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String,
                              fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {}
+}
+
+/// Reuses the same peer identity across launches (recommended by Apple for reliable reconnection).
+enum PeerIdentity {
+    static func load(key: String, displayName: String) -> MCPeerID {
+        let defaults = UserDefaults.standard
+        if let data = defaults.data(forKey: key),
+           let peer = try? NSKeyedUnarchiver.unarchivedObject(ofClass: MCPeerID.self, from: data),
+           peer.displayName == displayName {
+            return peer
+        }
+        let peer = MCPeerID(displayName: displayName)
+        if let data = try? NSKeyedArchiver.archivedData(withRootObject: peer, requiringSecureCoding: true) {
+            defaults.set(data, forKey: key)
+        }
+        return peer
+    }
 }

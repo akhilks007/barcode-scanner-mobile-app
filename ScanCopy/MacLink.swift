@@ -42,11 +42,21 @@ final class MacLink: NSObject, ObservableObject {
 
     @Published private(set) var status: MacLinkStatus = .off
 
-    private let myPeer = MCPeerID(displayName: UIDevice.current.name)
+    private let myPeer = PeerIdentity.load(key: "macLinkPeerID", displayName: UIDevice.current.name)
     private var session: MCSession?
     private var browser: MCNearbyServiceBrowser?
     private var pairingCode = ""
     private var isEnabled = false
+    private var watchdog: Timer?
+
+    override init() {
+        super.init()
+        // While enabled but not connected, keep retrying so the link comes back on its own
+        // (Mac restarted, woke from sleep, Wi-Fi changed…).
+        watchdog = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { [weak self] _ in
+            MainActor.assumeIsolated { self?.retryIfNeeded() }
+        }
+    }
 
     func start(pairingCode: String) {
         teardown()
@@ -92,6 +102,18 @@ final class MacLink: NSObject, ObservableObject {
     }
 
     // MARK: - Internals
+
+    private func retryIfNeeded() {
+        guard isEnabled, pairingCode.count == 6 else { return }
+        switch status {
+        case .connected, .connecting, .off, .needsCode:
+            return
+        case .searching, .rejected, .noPermission:
+            let previous = status
+            start(pairingCode: pairingCode)
+            if case .rejected = previous { status = previous }
+        }
+    }
 
     private func teardown() {
         browser?.delegate = nil
@@ -173,4 +195,21 @@ extension MacLink: MCSessionDelegate {
                              fromPeer peerID: MCPeerID, with progress: Progress) {}
     nonisolated func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String,
                              fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {}
+}
+
+/// Reuses the same peer identity across launches (recommended by Apple for reliable reconnection).
+enum PeerIdentity {
+    static func load(key: String, displayName: String) -> MCPeerID {
+        let defaults = UserDefaults.standard
+        if let data = defaults.data(forKey: key),
+           let peer = try? NSKeyedUnarchiver.unarchivedObject(ofClass: MCPeerID.self, from: data),
+           peer.displayName == displayName {
+            return peer
+        }
+        let peer = MCPeerID(displayName: displayName)
+        if let data = try? NSKeyedArchiver.archivedData(withRootObject: peer, requiringSecureCoding: true) {
+            defaults.set(data, forKey: key)
+        }
+        return peer
+    }
 }
