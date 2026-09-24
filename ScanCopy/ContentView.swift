@@ -17,6 +17,9 @@ enum ScanMode: String, CaseIterable, Identifiable {
 
 struct ContentView: View {
     @EnvironmentObject private var store: ScanStore
+    @EnvironmentObject private var macLink: MacLink
+    @AppStorage(SettingsKey.macLinkEnabled) private var macLinkEnabled = false
+    @AppStorage(SettingsKey.macPairingCode) private var macPairingCode = ""
     @Environment(\.scenePhase) private var scenePhase
     @AppStorage("scanMode") private var scanMode: ScanMode = .qr
     @AppStorage(SettingsKey.beepEnabled) private var beepEnabled = true
@@ -71,9 +74,14 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showSettings) {
             SettingsView()
+                .environmentObject(macLink)
+        }
+        .onAppear {
+            if macLinkEnabled { macLink.start(pairingCode: macPairingCode) }
         }
         .onChange(of: scenePhase) { _, phase in
             if phase != .active { torchOn = false }
+            if phase == .active, macLinkEnabled { macLink.resume() }
         }
     }
 
@@ -84,6 +92,9 @@ struct ContentView: View {
             CircleButton(systemImage: torchOn ? "flashlight.on.fill" : "flashlight.off.fill",
                          isActive: torchOn) {
                 torchOn.toggle()
+            }
+            if macLinkEnabled {
+                MacStatusPill(status: macLink.status) { showSettings = true }
             }
             Spacer()
             CircleButton(systemImage: "clock.arrow.circlepath") {
@@ -120,6 +131,7 @@ struct ContentView: View {
 
     private func handleScan(value: String, type: String) {
         copyToClipboard(value)
+        if macLinkEnabled { macLink.send(value: value, type: type) }
         if beepEnabled { BeepPlayer.shared.play() }
         if vibrateEnabled { Vibration.play() }
         withAnimation(.spring(duration: 0.3)) {
@@ -139,6 +151,29 @@ struct ContentView: View {
 }
 
 // MARK: - Subviews
+
+/// Small indicator on the camera screen showing whether the Mac helper is connected.
+struct MacStatusPill: View {
+    let status: MacLinkStatus
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 6) {
+                Image(systemName: "laptopcomputer")
+                Circle()
+                    .fill(status.isConnected ? Color.green : Color.orange)
+                    .frame(width: 8, height: 8)
+            }
+            .font(.system(size: 16, weight: .semibold))
+            .padding(.horizontal, 12)
+            .frame(height: 46)
+            .background(.ultraThinMaterial, in: Capsule())
+            .foregroundStyle(Color.white)
+        }
+        .accessibilityLabel(status.text)
+    }
+}
 
 struct ModeSwitcher: View {
     @Binding var mode: ScanMode

@@ -44,3 +44,25 @@ Codabar, PDF417, Aztec, Data Matrix, GS1 DataBar. (UPC-A codes are reported as E
 - `ScanCopy/ScanStore.swift` — saves history on the phone
 - `ScanCopy/SettingsView.swift` — beep / vibration settings
 - `ScanCopy/BeepPlayer.swift` — generates and plays the beep
+
+## Mac helper: type scans straight into Numbers (like a USB barcode scanner)
+`ScanCopyMac` is a small menu-bar app. It receives scans from the iPhone over Wi-Fi/Bluetooth
+and types them into whatever is active on the Mac, then presses Return to move to the next row.
+
+**One-time setup**
+1. In Xcode, pick the **ScanCopyMac** scheme (top-left, next to the ▶ button) with **My Mac**
+   as the destination and press **⌘R**. A barcode icon appears in the menu bar. There's no Dock icon.
+2. Click the menu-bar icon → **Grant Access…** → turn on **ScanCopyMac** in
+   System Settings ▸ Privacy & Security ▸ Accessibility. This lets it type. Allow **Local Network** if asked.
+3. Note the 6-digit **pairing code** shown in the menu-bar window.
+4. Switch the scheme back to **ScanCopy** and your iPhone, then press ⌘R. On the iPhone, open
+   ⚙ Settings ▸ **Type into Mac**, turn it on, enter the code and allow **Local Network** when asked.
+   The laptop icon on the camera screen turns green when connected.
+
+**Daily use:** in Numbers, click the first empty cell (e.g. B2), then scan codes one after another.
+Each one is typed into the cell and the cursor moves down. Change "After each scan press" to
+**Tab** in the menu-bar window to fill across a row instead.
+
+To keep the Mac app without Xcode: in Xcode's file list open **Products**, right-click
+**ScanCopyMac.app** ▸ Show in Finder, drag it to **Applications**, and turn on **Open at login**
+in its menu. If typing stops after you rebuild it, remove and re-add ScanCopyMac in the Accessibility list.

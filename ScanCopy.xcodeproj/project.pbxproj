@@ -15,6 +15,11 @@
 		AA0000000000000000000017 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000007 /* HistoryView.swift */; };
 		AA0000000000000000000018 /* BeepPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000008 /* BeepPlayer.swift */; };
 		AA0000000000000000000019 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000009 /* SettingsView.swift */; };
+		AA000000000000000000001A /* MacLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000000000A /* MacLink.swift */; };
+		BB0000000000000000000011 /* ScanCopyMacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000001 /* ScanCopyMacApp.swift */; };
+		BB0000000000000000000012 /* ScanReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000002 /* ScanReceiver.swift */; };
+		BB0000000000000000000013 /* KeyTyper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000003 /* KeyTyper.swift */; };
+		BB0000000000000000000014 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000004 /* MenuView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,10 +32,25 @@
 		AA0000000000000000000007 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		AA0000000000000000000008 /* BeepPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeepPlayer.swift; sourceTree = "<group>"; };
 		AA0000000000000000000009 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		AA000000000000000000000A /* MacLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacLink.swift; sourceTree = "<group>"; };
+		AA000000000000000000000B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB0000000000000000000001 /* ScanCopyMacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanCopyMacApp.swift; sourceTree = "<group>"; };
+		BB0000000000000000000002 /* ScanReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanReceiver.swift; sourceTree = "<group>"; };
+		BB0000000000000000000003 /* KeyTyper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyTyper.swift; sourceTree = "<group>"; };
+		BB0000000000000000000004 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		BB0000000000000000000005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB0000000000000000000006 /* ScanCopyMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScanCopyMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		AA0000000000000000000031 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB0000000000000000000031 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -44,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				AA0000000000000000000021 /* ScanCopy */,
+				BB0000000000000000000021 /* ScanCopyMac */,
 				AA0000000000000000000022 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,7 +79,9 @@
 				AA0000000000000000000008 /* BeepPlayer.swift */,
 				AA0000000000000000000003 /* ScannerView.swift */,
 				AA0000000000000000000004 /* ScanStore.swift */,
+				AA000000000000000000000A /* MacLink.swift */,
 				AA0000000000000000000005 /* Assets.xcassets */,
+				AA000000000000000000000B /* Info.plist */,
 			);
 			path = ScanCopy;
 			sourceTree = "<group>";
@@ -67,8 +90,21 @@
 			isa = PBXGroup;
 			children = (
 				AA0000000000000000000006 /* ScanCopy.app */,
+				BB0000000000000000000006 /* ScanCopyMac.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		BB0000000000000000000021 /* ScanCopyMac */ = {
+			isa = PBXGroup;
+			children = (
+				BB0000000000000000000001 /* ScanCopyMacApp.swift */,
+				BB0000000000000000000004 /* MenuView.swift */,
+				BB0000000000000000000002 /* ScanReceiver.swift */,
+				BB0000000000000000000003 /* KeyTyper.swift */,
+				BB0000000000000000000005 /* Info.plist */,
+			);
+			path = ScanCopyMac;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -91,6 +127,23 @@
 			productReference = AA0000000000000000000006 /* ScanCopy.app */;
 			productType = "com.apple.product-type.application";
 		};
+		BB0000000000000000000040 /* ScanCopyMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BB0000000000000000000070 /* Build configuration list for PBXNativeTarget "ScanCopyMac" */;
+			buildPhases = (
+				BB0000000000000000000030 /* Sources */,
+				BB0000000000000000000031 /* Frameworks */,
+				BB0000000000000000000032 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ScanCopyMac;
+			productName = ScanCopyMac;
+			productReference = BB0000000000000000000006 /* ScanCopyMac.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -102,6 +155,9 @@
 				LastUpgradeCheck = 2650;
 				TargetAttributes = {
 					AA0000000000000000000040 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					BB0000000000000000000040 = {
 						CreatedOnToolsVersion = 15.0;
 					};
 				};
@@ -120,6 +176,7 @@
 			projectRoot = "";
 			targets = (
 				AA0000000000000000000040 /* ScanCopy */,
+				BB0000000000000000000040 /* ScanCopyMac */,
 			);
 		};
 /* End PBXProject section */
@@ -130,6 +187,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA0000000000000000000015 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB0000000000000000000032 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,6 +211,18 @@
 				AA0000000000000000000018 /* BeepPlayer.swift in Sources */,
 				AA0000000000000000000013 /* ScannerView.swift in Sources */,
 				AA0000000000000000000014 /* ScanStore.swift in Sources */,
+				AA000000000000000000001A /* MacLink.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB0000000000000000000030 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB0000000000000000000011 /* ScanCopyMacApp.swift in Sources */,
+				BB0000000000000000000014 /* MenuView.swift in Sources */,
+				BB0000000000000000000012 /* ScanReceiver.swift in Sources */,
+				BB0000000000000000000013 /* KeyTyper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +352,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = ScanCopy;
 				INFOPLIST_KEY_NSCameraUsageDescription = "ScanCopy uses the camera to scan barcodes and QR codes and copy them to your clipboard.";
+				INFOPLIST_FILE = ScanCopy/Info.plist;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "ScanCopy connects to the ScanCopy Mac helper on your network to type scanned codes on your Mac.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -306,6 +384,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = ScanCopy;
 				INFOPLIST_KEY_NSCameraUsageDescription = "ScanCopy uses the camera to scan barcodes and QR codes and copy them to your clipboard.";
+				INFOPLIST_FILE = ScanCopy/Info.plist;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "ScanCopy connects to the ScanCopy Mac helper on your network to type scanned codes on your Mac.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -321,6 +401,62 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		BB0000000000000000000071 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ScanCopyMac/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "ScanCopy Mac";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "ScanCopy Mac receives scanned codes from ScanCopy on your iPhone.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.akhilks.ScanCopyMac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		BB0000000000000000000072 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ScanCopyMac/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "ScanCopy Mac";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "ScanCopy Mac receives scanned codes from ScanCopy on your iPhone.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.akhilks.ScanCopyMac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -341,6 +477,15 @@
 			buildConfigurations = (
 				AA0000000000000000000071 /* Debug */,
 				AA0000000000000000000072 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BB0000000000000000000070 /* Build configuration list for PBXNativeTarget "ScanCopyMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB0000000000000000000071 /* Debug */,
+				BB0000000000000000000072 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
