@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Menu-bar app that receives scans from ScanCopy on iPhone and types them into the active app.
+/// Menu-bar app that receives scans from CodeDropScan on iPhone and types them into the active app.
 @main
 struct ScanCopyMacApp: App {
     @StateObject private var receiver = ScanReceiver()

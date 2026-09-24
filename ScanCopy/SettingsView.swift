@@ -44,7 +44,7 @@ struct SettingsView: View {
                 } header: {
                     Text("Mac helper")
                 } footer: {
-                    Text("Open ScanCopy Mac on your Mac and enter the code shown in its menu-bar window. Each scan is then typed into whatever is selected on the Mac (for example a Numbers cell), and the cursor moves on to the next row.")
+                    Text("Open CodeDropScan on your Mac and enter the code shown in its menu-bar window. Each scan is then typed into whatever is selected on the Mac (for example a Numbers cell), and the cursor moves on to the next row.")
                 }
                 .onChange(of: macLinkEnabled) { _, on in
                     if on { macLink.start(pairingCode: macPairingCode) } else { macLink.stop() }

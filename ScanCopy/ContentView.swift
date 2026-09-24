@@ -311,7 +311,7 @@ struct PermissionView: View {
                 .font(.system(size: 44))
             Text("Camera access needed")
                 .font(.title3.bold())
-            Text("ScanCopy uses the camera to read barcodes and QR codes. Please allow camera access in Settings.")
+            Text("CodeDropScan uses the camera to read barcodes and QR codes. Please allow camera access in Settings.")
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
             Button("Open Settings") {

@@ -39,7 +39,7 @@
 		BB0000000000000000000003 /* KeyTyper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyTyper.swift; sourceTree = "<group>"; };
 		BB0000000000000000000004 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		BB0000000000000000000005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BB0000000000000000000006 /* ScanCopyMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScanCopyMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB0000000000000000000006 /* CodeDropScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeDropScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				AA0000000000000000000006 /* ScanCopy.app */,
-				BB0000000000000000000006 /* ScanCopyMac.app */,
+				BB0000000000000000000006 /* CodeDropScan.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -141,7 +141,7 @@
 			);
 			name = ScanCopyMac;
 			productName = ScanCopyMac;
-			productReference = BB0000000000000000000006 /* ScanCopyMac.app */;
+			productReference = BB0000000000000000000006 /* CodeDropScan.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -350,10 +350,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = ScanCopy;
-				INFOPLIST_KEY_NSCameraUsageDescription = "ScanCopy uses the camera to scan barcodes and QR codes and copy them to your clipboard.";
+				INFOPLIST_KEY_CFBundleDisplayName = CodeDropScan;
+				INFOPLIST_KEY_NSCameraUsageDescription = "CodeDropScan uses the camera to scan barcodes and QR codes and copy them to your clipboard.";
 				INFOPLIST_FILE = ScanCopy/Info.plist;
-				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "ScanCopy connects to the ScanCopy Mac helper on your network to type scanned codes on your Mac.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "CodeDropScan connects to CodeDropScan on your Mac to type scanned codes there.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -382,10 +382,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = ScanCopy;
-				INFOPLIST_KEY_NSCameraUsageDescription = "ScanCopy uses the camera to scan barcodes and QR codes and copy them to your clipboard.";
+				INFOPLIST_KEY_CFBundleDisplayName = CodeDropScan;
+				INFOPLIST_KEY_NSCameraUsageDescription = "CodeDropScan uses the camera to scan barcodes and QR codes and copy them to your clipboard.";
 				INFOPLIST_FILE = ScanCopy/Info.plist;
-				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "ScanCopy connects to the ScanCopy Mac helper on your network to type scanned codes on your Mac.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "CodeDropScan connects to CodeDropScan on your Mac to type scanned codes there.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -414,10 +414,10 @@
 				ENABLE_HARDENED_RUNTIME = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScanCopyMac/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "ScanCopy Mac";
+				INFOPLIST_KEY_CFBundleDisplayName = CodeDropScan;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "ScanCopy Mac receives scanned codes from ScanCopy on your iPhone.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "CodeDropScan receives scanned codes from CodeDropScan on your iPhone.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -425,7 +425,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.akhilks.ScanCopyMac;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CodeDropScan;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -442,10 +442,10 @@
 				ENABLE_HARDENED_RUNTIME = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScanCopyMac/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "ScanCopy Mac";
+				INFOPLIST_KEY_CFBundleDisplayName = CodeDropScan;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "ScanCopy Mac receives scanned codes from ScanCopy on your iPhone.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "CodeDropScan receives scanned codes from CodeDropScan on your iPhone.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -453,7 +453,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.akhilks.ScanCopyMac;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CodeDropScan;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

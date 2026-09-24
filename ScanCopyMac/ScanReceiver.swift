@@ -198,7 +198,7 @@ extension ScanReceiver: MCNearbyServiceAdvertiserDelegate {
                                 didNotStartAdvertisingPeer error: Error) {
         DispatchQueue.main.async {
             MainActor.assumeIsolated {
-                self.networkError = "Couldn't start listening. Allow Local Network for ScanCopyMac in System Settings ▸ Privacy & Security."
+                self.networkError = "Couldn't start listening. Allow Local Network for CodeDropScan in System Settings ▸ Privacy & Security."
             }
         }
     }

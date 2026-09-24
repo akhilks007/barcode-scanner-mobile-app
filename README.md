@@ -1,6 +1,6 @@
-# ScanCopy — iPhone barcode / QR scanner → Mac clipboard
+# CodeDropScan — iPhone barcode / QR scanner → Mac clipboard
 
-Point your iPhone at any barcode or QR code. ScanCopy reads it, copies the text to the
+Point your iPhone at any barcode or QR code. CodeDropScan reads it, copies the text to the
 clipboard, and (via Apple's Universal Clipboard) you can press **⌘V on your Mac** to paste it.
 
 ## 1. Run it on your iPhone (one-time setup)
@@ -52,7 +52,7 @@ and types them into whatever is active on the Mac, then presses Return to move t
 **One-time setup**
 1. In Xcode, pick the **ScanCopyMac** scheme (top-left, next to the ▶ button) with **My Mac**
    as the destination and press **⌘R**. A barcode icon appears in the menu bar. There's no Dock icon.
-2. Click the menu-bar icon → **Grant Access…** → turn on **ScanCopyMac** in
+2. Click the menu-bar icon → **Grant Access…** → turn on **CodeDropScan** in
    System Settings ▸ Privacy & Security ▸ Accessibility. This lets it type. Allow **Local Network** if asked.
 3. Note the 6-digit **pairing code** shown in the menu-bar window.
 4. Switch the scheme back to **ScanCopy** and your iPhone, then press ⌘R. On the iPhone, open
@@ -63,10 +63,10 @@ and types them into whatever is active on the Mac, then presses Return to move t
 Each one is typed into the cell and the cursor moves down. Change "After each scan press" to
 **Tab** in the menu-bar window to fill across a row instead.
 
-**Install permanently:** double-click **Install ScanCopy Mac.command** in this folder. It builds the app,
+**Install permanently:** double-click **Install CodeDropScan for Mac.command** in this folder. It builds the app,
 copies it to /Applications, starts it, and sets it to open automatically at login. Run it again after any code
-change. After the first install, re-enable ScanCopyMac in the Accessibility list if typing doesn't work.
+change. After the first install, re-enable CodeDropScan in the Accessibility list if typing doesn't work.
 
-**Auto-reconnect:** once the code is entered on the iPhone, it's remembered on both devices. Whenever ScanCopy
+**Auto-reconnect:** once the code is entered on the iPhone, it's remembered on both devices. Whenever CodeDropScan
 is open on the iPhone, it finds the Mac and connects within a few seconds. This also works after the Mac restarts,
 wakes from sleep, or the Wi-Fi changes. (iOS doesn't allow the link while the iPhone app is closed.)

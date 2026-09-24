@@ -29,13 +29,13 @@ enum MacLinkStatus: Equatable {
         case .searching: return "Looking for your Mac…"
         case .connecting(let name): return "Connecting to \(name)…"
         case .rejected(let name): return "\(name) didn't accept. Check the pairing code"
-        case .noPermission: return "Allow Local Network for ScanCopy in iPhone Settings"
+        case .noPermission: return "Allow Local Network for CodeDropScan in iPhone Settings"
         case .connected(let name): return "Connected to \(name)"
         }
     }
 }
 
-/// Finds the ScanCopy Mac helper on the local network (Wi-Fi / Bluetooth) and sends it each scan.
+/// Finds the CodeDropScan Mac app on the local network (Wi-Fi / Bluetooth) and sends it each scan.
 @MainActor
 final class MacLink: NSObject, ObservableObject {
     static let serviceType = "scancopy"

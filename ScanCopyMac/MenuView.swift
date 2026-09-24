@@ -15,7 +15,7 @@ struct MenuView: View {
                     .font(.title2)
                     .foregroundStyle(Color.accentColor)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("ScanCopy").font(.headline)
+                    Text("CodeDropScan").font(.headline)
                     HStack(spacing: 6) {
                         Circle()
                             .fill(isConnected ? Color.green : Color.orange)
@@ -49,7 +49,7 @@ struct MenuView: View {
                     Spacer()
                     Button("New code") { receiver.newPairingCode() }
                 }
-                Text("On your iPhone: ScanCopy ▸ Settings ▸ Type into Mac, then enter this code.")
+                Text("On your iPhone: CodeDropScan ▸ Settings ▸ Type into Mac, then enter this code.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -69,7 +69,7 @@ struct MenuView: View {
 
             if receiver.typingEnabled && !receiver.hasAccessibility {
                 VStack(alignment: .leading, spacing: 8) {
-                    Label("ScanCopy needs Accessibility permission to type on this Mac.",
+                    Label("CodeDropScan needs Accessibility permission to type on this Mac.",
                           systemImage: "exclamationmark.triangle.fill")
                         .font(.caption)
                         .foregroundStyle(Color.orange)
