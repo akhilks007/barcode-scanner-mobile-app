@@ -29,9 +29,8 @@ final class ScannerViewController: UIViewController {
     let camera = CameraController()
     private let previewLayer = AVCaptureVideoPreviewLayer()
 
-    var scanAreaSize: CGSize = .zero {
-        didSet { if oldValue != scanAreaSize { updateRectOfInterest() } }
-    }
+    /// Size of the on-screen frame. Codes whose centre is outside it are ignored.
+    var scanAreaSize: CGSize = .zero
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,26 +38,25 @@ final class ScannerViewController: UIViewController {
         previewLayer.session = camera.session
         previewLayer.videoGravity = .resizeAspectFill
         view.layer.addSublayer(previewLayer)
-        camera.onSessionStarted = { [weak self] in self?.updateRectOfInterest() }
+        camera.acceptCode = { [weak self] code in
+            self?.isInsideFrame(code) ?? true
+        }
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         previewLayer.frame = view.bounds
-        updateRectOfInterest()
     }
 
-    /// Limits detection to the frame drawn in the centre of the screen (plus a little margin).
-    private func updateRectOfInterest() {
+    /// True when the code's centre (as shown on screen) is inside the frame, plus a small margin.
+    private func isInsideFrame(_ code: AVMetadataMachineReadableCodeObject) -> Bool {
         let bounds = view.bounds
-        guard scanAreaSize.width > 0, bounds.width > 0 else { return }
-        let w = min(scanAreaSize.width * 1.15, bounds.width)
-        let h = min(scanAreaSize.height * 1.3, bounds.height)
-        let layerRect = CGRect(x: bounds.midX - w / 2, y: bounds.midY - h / 2, width: w, height: h)
-        let roi = previewLayer.metadataOutputRectConverted(fromLayerRect: layerRect)
-            .intersection(CGRect(x: 0, y: 0, width: 1, height: 1))
-        guard !roi.isNull, roi.width > 0, roi.height > 0 else { return }
-        camera.setRectOfInterest(roi)
+        guard scanAreaSize.width > 0, bounds.width > 0,
+              let onScreen = previewLayer.transformedMetadataObject(for: code) else { return true }
+        let w = scanAreaSize.width + 40
+        let h = scanAreaSize.height + 40
+        let frame = CGRect(x: bounds.midX - w / 2, y: bounds.midY - h / 2, width: w, height: h)
+        return frame.contains(CGPoint(x: onScreen.bounds.midX, y: onScreen.bounds.midY))
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -78,11 +76,12 @@ final class CameraController: NSObject, AVCaptureMetadataOutputObjectsDelegate, 
     private let sessionQueue = DispatchQueue(label: "ScanCopy.camera")
     private var device: AVCaptureDevice?
     private var isConfigured = false
-    private let metadataOutput = AVCaptureMetadataOutput()
+    private let codeOutput = AVCaptureMetadataOutput()
 
     // Accessed on the main thread
     var onCodeScanned: ((String, String) -> Void)?
-    var onSessionStarted: (() -> Void)?
+    /// Decides whether a detected code counts (used to ignore codes outside the on-screen frame).
+    var acceptCode: ((AVMetadataMachineReadableCodeObject) -> Bool)?
     var isScanningEnabled = true
     private var torchRequested = false
     private var lastValue: String?
@@ -100,7 +99,6 @@ final class CameraController: NSObject, AVCaptureMetadataOutputObjectsDelegate, 
         sessionQueue.async {
             self.configureIfNeeded()
             if !self.session.isRunning { self.session.startRunning() }
-            DispatchQueue.main.async { self.onSessionStarted?() }
         }
     }
 
@@ -108,10 +106,6 @@ final class CameraController: NSObject, AVCaptureMetadataOutputObjectsDelegate, 
         sessionQueue.async {
             if self.session.isRunning { self.session.stopRunning() }
         }
-    }
-
-    func setRectOfInterest(_ rect: CGRect) {
-        sessionQueue.async { self.metadataOutput.rectOfInterest = rect }
     }
 
     func setTorch(_ on: Bool) {
@@ -153,7 +147,7 @@ final class CameraController: NSObject, AVCaptureMetadataOutputObjectsDelegate, 
         session.addInput(input)
         device = camera
 
-        let output = metadataOutput
+        let output = codeOutput
         guard session.canAddOutput(output) else {
             session.commitConfiguration()
             return
@@ -196,6 +190,7 @@ final class CameraController: NSObject, AVCaptureMetadataOutputObjectsDelegate, 
         let codes = metadataObjects
             .compactMap { $0 as? AVMetadataMachineReadableCodeObject }
             .filter { !($0.stringValue ?? "").isEmpty }
+            .filter { acceptCode?($0) ?? true }
         guard !codes.isEmpty else { return }
         let now = Date()
 
